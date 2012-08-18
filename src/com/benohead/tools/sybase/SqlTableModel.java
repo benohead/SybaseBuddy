@@ -5,28 +5,30 @@ import java.util.HashMap;
 import javax.swing.table.DefaultTableModel;
 
 final class SqlTableModel extends DefaultTableModel {
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	private HashMap<Integer, Class> columnClasses = new HashMap<Integer, Class>();
+    private static final long serialVersionUID = 1L;
+    @SuppressWarnings("rawtypes")
+    private final HashMap<Integer, Class> columnClasses = new HashMap<Integer, Class>();
 
-	public void setColumnName(int nColumnIndex, String strColumnName) {
-		columnIdentifiers.set(nColumnIndex, strColumnName);
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        if (columnClasses.containsKey(columnIndex)) {
+            return columnClasses.get(columnIndex);
+        }
+        return super.getColumnClass(columnIndex);
+    }
 
-		fireTableStructureChanged();
-	}
+    public void setColumnClass(int i, @SuppressWarnings("rawtypes") Class class1) {
+        columnClasses.remove(i);
+        columnClasses.put(i, class1);
+    }
 
-	public void setColumnClass(int i, Class class1) {
-		columnClasses.remove(i);
-		columnClasses.put(i, class1);
-	}
+    @SuppressWarnings("unchecked")
+    public void setColumnName(int nColumnIndex, String strColumnName) {
+        columnIdentifiers.set(nColumnIndex, strColumnName);
 
-	@Override
-	public Class<?> getColumnClass(int columnIndex) {
-		if (columnClasses.containsKey(columnIndex)) {
-			return columnClasses.get(columnIndex);
-		}
-		return super.getColumnClass(columnIndex);
-	}
+        fireTableStructureChanged();
+    }
 }
