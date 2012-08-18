@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
+<jardesc>
+    <jar path="sybasebuddy/images.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/sybasebuddy/images.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="true" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <file path="/sybasebuddy/refresh.png"/>
+        <file path="/sybasebuddy/connected.gif"/>
+        <file path="/sybasebuddy/icon.png"/>
+        <file path="/sybasebuddy/tabs.png"/>
+        <file path="/sybasebuddy/config.png"/>
+        <file path="/sybasebuddy/export.png"/>
+        <file path="/sybasebuddy/refresh.png"/>
+        <file path="/sybasebuddy/disconnected.gif"/>
+    </selectedElements>
+</jardesc>
