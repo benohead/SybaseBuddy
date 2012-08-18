@@ -3,21 +3,21 @@
     <!--this file was created by Eclipse Runnable JAR Export Wizard-->
     <!--ANT 1.7 is required                                        -->
     <target name="create_run_jar">
-        <jar destfile="D:/SnapshotViews/benohead_private/iwm_ext/sources/sybasebuddy/dist/sybasebuddy.jar">
+        <jar destfile="${basedir}/dist/sybasebuddy.jar">
             <manifest>
                 <attribute name="Main-Class" value="com.benohead.tools.sybase.SybaseBuddyApplication"/>
                 <attribute name="Class-Path" value=". sybasebuddy_lib/jconn3.jar sybasebuddy_lib/images.jar sybasebuddy_lib/swingx-core-1.6.2.jar"/>
             </manifest>
-            <fileset dir="D:/SnapshotViews/benohead_private/iwm_ext/sources/sybasebuddy/bin"/>
+            <fileset dir="${basedir}/bin"/>
         </jar>
-        <delete dir="D:/SnapshotViews/benohead_private/iwm_ext/sources/sybasebuddy/dist/sybasebuddy_lib"/>
-        <mkdir dir="D:/SnapshotViews/benohead_private/iwm_ext/sources/sybasebuddy/dist/sybasebuddy_lib"/>
-        <copy file="D:/SnapshotViews/benohead_private/iwm_ext/sources/sybasebuddy/jconn3.jar" todir="D:/SnapshotViews/benohead_private/iwm_ext/sources/sybasebuddy/dist/sybasebuddy_lib"/>
-        <copy file="D:/SnapshotViews/benohead_private/iwm_ext/sources/sybasebuddy/images.jar" todir="D:/SnapshotViews/benohead_private/iwm_ext/sources/sybasebuddy/dist/sybasebuddy_lib"/>
-        <copy file="D:/SnapshotViews/benohead_private/iwm_ext/sources/sybasebuddy/swingx-core-1.6.2.jar" todir="D:/SnapshotViews/benohead_private/iwm_ext/sources/sybasebuddy/dist/sybasebuddy_lib"/>
-        <copy file="D:/SnapshotViews/benohead_private/iwm_ext/sources/sybasebuddy/tabs.ini" todir="D:/SnapshotViews/benohead_private/iwm_ext/sources/sybasebuddy/dist"/>
-        <copy file="D:/SnapshotViews/benohead_private/iwm_ext/sources/sybasebuddy/contextmenu.ini" todir="D:/SnapshotViews/benohead_private/iwm_ext/sources/sybasebuddy/dist"/>
-        <copy file="D:/SnapshotViews/benohead_private/iwm_ext/sources/sybasebuddy/servers.ini" todir="D:/SnapshotViews/benohead_private/iwm_ext/sources/sybasebuddy/dist"/>
-        <copy file="D:/SnapshotViews/benohead_private/iwm_ext/sources/sybasebuddy/rev_tbl.sql" todir="D:/SnapshotViews/benohead_private/iwm_ext/sources/sybasebuddy/dist"/>
+        <delete dir="${basedir}/dist/sybasebuddy_lib"/>
+        <mkdir dir="${basedir}/dist/sybasebuddy_lib"/>
+        <copy file="${basedir}/jconn3.jar" todir="${basedir}/dist/sybasebuddy_lib"/>
+        <copy file="${basedir}/images.jar" todir="${basedir}/dist/sybasebuddy_lib"/>
+        <copy file="${basedir}/swingx-core-1.6.2.jar" todir="${basedir}/dist/sybasebuddy_lib"/>
+        <copy file="${basedir}/tabs.ini" todir="${basedir}/dist"/>
+        <copy file="${basedir}/contextmenu.ini" todir="${basedir}/dist"/>
+        <copy file="${basedir}/servers.ini" todir="${basedir}/dist"/>
+        <copy file="${basedir}/rev_tbl.sql" todir="${basedir}/dist"/>
     </target>
 </project>
