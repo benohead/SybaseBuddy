@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
 <jardesc>
     <jar path="sybasebuddy/images.jar"/>
-    <options buildIfNeeded="true" compress="true" descriptionLocation="/sybasebuddy/images.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/SybaseBuddy/images.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
     <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
     <selectedProjects/>
     <manifest generateManifest="true" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
@@ -11,13 +11,12 @@
         </sealing>
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
-        <file path="/sybasebuddy/refresh.png"/>
-        <file path="/sybasebuddy/connected.gif"/>
-        <file path="/sybasebuddy/icon.png"/>
-        <file path="/sybasebuddy/tabs.png"/>
-        <file path="/sybasebuddy/config.png"/>
-        <file path="/sybasebuddy/export.png"/>
-        <file path="/sybasebuddy/refresh.png"/>
-        <file path="/sybasebuddy/disconnected.gif"/>
+        <file path="/SybaseBuddy/disconnected.gif"/>
+        <file path="/SybaseBuddy/refresh.png"/>
+        <file path="/SybaseBuddy/connected.gif"/>
+        <file path="/SybaseBuddy/tabs.png"/>
+        <file path="/SybaseBuddy/config.png"/>
+        <file path="/SybaseBuddy/icon.png"/>
+        <file path="/SybaseBuddy/export.png"/>
     </selectedElements>
 </jardesc>
