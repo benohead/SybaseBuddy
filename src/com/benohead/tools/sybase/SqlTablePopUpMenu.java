@@ -38,74 +38,76 @@ class SqlTablePopUpMenu extends JPopupMenu {
         if (value != null) {
             String normalizedColumnName = normalizeColumnName(columnName);
             ArrayList<ContextMenuItem> menu = contextMenuItems.get(normalizedColumnName);
-            for (ContextMenuItem contextMenuItem2 : menu) {
-                ContextMenuItem contextMenuItem = contextMenuItem2;
-                final String menuItemText = contextMenuItem.menuItem.replaceAll("%value%", value);
-                anItem = new JMenuItem(menuItemText);
-                final String sql = contextMenuItem.sql.replaceAll("%value%", value);
-                if (contextMenuItem.action.equalsIgnoreCase("execute")) {
-                    anItem.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent arg0) {
-                            try {
-                                SybaseBuddyApplication.connection.createStatement().execute(sql);
-                            }
-                            catch (SQLException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                }
-                else if (contextMenuItem.action.equalsIgnoreCase("askandexecute")) {
-                    anItem.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent arg0) {
-                            try {
-                                int result = JOptionPane.showConfirmDialog(frame, "Are you sure you want to " + menuItemText + " ?", menuItemText, JOptionPane.YES_NO_OPTION);
-                                if (result == JOptionPane.YES_OPTION) {
-                                    SybaseBuddyApplication.connection.createStatement().execute(sql);
-                                }
-                            }
-                            catch (SQLException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                }
-                else if (contextMenuItem.action.equalsIgnoreCase("displaytable")) {
-                    anItem.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent arg0) {
-                            displaySqlTableDialog(frame, sql);
-                        }
-                    });
-                }
-                else if (contextMenuItem.action.equalsIgnoreCase("displayresultsets")) {
-                    anItem.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent arg0) {
-                            try {
-                                displayResultSetsInDialog(frame, sql);
-                            }
-                            catch (SQLException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                }
-                else if (contextMenuItem.action.equalsIgnoreCase("displaywarnings")) {
-                    anItem.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent arg0) {
-                            try {
-                                displayWarningsInDialog(frame, sql);
-                            }
-                            catch (SQLException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                }
-                add(anItem);
+            if (menu != null) {
+	            for (ContextMenuItem contextMenuItem2 : menu) {
+	                ContextMenuItem contextMenuItem = contextMenuItem2;
+	                final String menuItemText = contextMenuItem.menuItem.replaceAll("%value%", value);
+	                anItem = new JMenuItem(menuItemText);
+	                final String sql = contextMenuItem.sql.replaceAll("%value%", value);
+	                if (contextMenuItem.action.equalsIgnoreCase("execute")) {
+	                    anItem.addActionListener(new ActionListener() {
+	                        public void actionPerformed(ActionEvent arg0) {
+	                            try {
+	                                SybaseBuddyApplication.connection.createStatement().execute(sql);
+	                            }
+	                            catch (SQLException e) {
+	                                // TODO Auto-generated catch block
+	                                e.printStackTrace();
+	                            }
+	                        }
+	                    });
+	                }
+	                else if (contextMenuItem.action.equalsIgnoreCase("askandexecute")) {
+	                    anItem.addActionListener(new ActionListener() {
+	                        public void actionPerformed(ActionEvent arg0) {
+	                            try {
+	                                int result = JOptionPane.showConfirmDialog(frame, "Are you sure you want to " + menuItemText + " ?", menuItemText, JOptionPane.YES_NO_OPTION);
+	                                if (result == JOptionPane.YES_OPTION) {
+	                                    SybaseBuddyApplication.connection.createStatement().execute(sql);
+	                                }
+	                            }
+	                            catch (SQLException e) {
+	                                // TODO Auto-generated catch block
+	                                e.printStackTrace();
+	                            }
+	                        }
+	                    });
+	                }
+	                else if (contextMenuItem.action.equalsIgnoreCase("displaytable")) {
+	                    anItem.addActionListener(new ActionListener() {
+	                        public void actionPerformed(ActionEvent arg0) {
+	                            displaySqlTableDialog(frame, sql);
+	                        }
+	                    });
+	                }
+	                else if (contextMenuItem.action.equalsIgnoreCase("displayresultsets")) {
+	                    anItem.addActionListener(new ActionListener() {
+	                        public void actionPerformed(ActionEvent arg0) {
+	                            try {
+	                                displayResultSetsInDialog(frame, sql);
+	                            }
+	                            catch (SQLException e) {
+	                                // TODO Auto-generated catch block
+	                                e.printStackTrace();
+	                            }
+	                        }
+	                    });
+	                }
+	                else if (contextMenuItem.action.equalsIgnoreCase("displaywarnings")) {
+	                    anItem.addActionListener(new ActionListener() {
+	                        public void actionPerformed(ActionEvent arg0) {
+	                            try {
+	                                displayWarningsInDialog(frame, sql);
+	                            }
+	                            catch (SQLException e) {
+	                                // TODO Auto-generated catch block
+	                                e.printStackTrace();
+	                            }
+	                        }
+	                    });
+	                }
+	                add(anItem);
+	            }
             }
         }
     }
@@ -150,7 +152,9 @@ class SqlTablePopUpMenu extends JPopupMenu {
 
     private void displaySqlTableDialog(final JFrame frame, String sql) {
         // create an SQL table
-        SqlTable table = new SqlTable(sql);
+    	TabDefinition tabDef = new TabDefinition();
+    	tabDef.setSql(sql);
+        SqlTable table = new SqlTable(tabDef);
         try {
             table.refresh(true);
         }

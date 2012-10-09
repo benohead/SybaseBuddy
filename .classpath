@@ -4,8 +4,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="images.jar"/>
 	<classpathentry kind="lib" path="jconn3.jar"/>
-	<classpathentry kind="lib" path="swingx-core-1.6.2.jar"/>
 	<classpathentry kind="lib" path="jcommon-1.0.17.jar"/>
 	<classpathentry kind="lib" path="jfreechart-1.0.14.jar"/>
+	<classpathentry kind="lib" path="swingx-all-1.6.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
