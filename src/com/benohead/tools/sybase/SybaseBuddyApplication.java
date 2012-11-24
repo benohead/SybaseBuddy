@@ -780,6 +780,31 @@ public class SybaseBuddyApplication implements ChangeListener, SybMessageHandler
 					}
 					colorIndex++;
 				} while (colorDefinition != null);
+				IconDefinition iconDefinition;
+				int iconIndex = 1;
+				do {
+					iconDefinition = null;
+					if (p.containsKey("tabicon_" + tabId + "_icon" + iconIndex)) {
+						String iconString = p.get("tabicon_" + tabId + "_icon" + iconIndex).toString();
+						String column = p.get("tabcolumn_" + tabId + "_icon" + iconIndex).toString();
+						String rule = p.get("tabrule_" + tabId + "_icon" + iconIndex).toString();
+						ImageIcon icon;
+						try {
+							icon = new ImageIcon(iconString);
+						} catch (Exception e) {
+							e.printStackTrace();
+							icon = null; // Not defined
+						}
+						if (icon != null) {
+							iconDefinition = new IconDefinition();
+							iconDefinition.setIcon(icon);
+							iconDefinition.setColumn(column);
+							iconDefinition.setRule(rule);
+							tabSql.addIcon(iconDefinition);
+						}
+					}
+					iconIndex++;
+				} while (iconDefinition != null);
 				tabs.put(keyValue, tabSql);
 			}
 		}

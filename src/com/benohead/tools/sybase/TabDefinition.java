@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class TabDefinition {
 	private String sql;
 	private ArrayList<ColorDefinition> colors = new ArrayList<ColorDefinition>();
+	private ArrayList<IconDefinition> icons = new ArrayList<IconDefinition>();
 
 	public ArrayList<ColorDefinition> getColors() {
 		return colors;
@@ -35,5 +36,17 @@ public class TabDefinition {
 
 	public void setSql(String sql) {
 		this.sql = sql;
+	}
+
+	public ArrayList<IconDefinition> getIcons() {
+		return icons;
+	}
+
+	public void setIcons(ArrayList<IconDefinition> icons) {
+		this.icons = icons;
+	}
+
+	public void addIcon(IconDefinition iconDefinition) {
+		this.icons.add(iconDefinition);
 	}
 }

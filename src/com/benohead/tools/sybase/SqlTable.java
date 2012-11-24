@@ -45,14 +45,19 @@ public class SqlTable extends JXTable {
 	private String sql;
 	private final SqlTableModel tableModel = new SqlTableModel();
 	private ArrayList<ColorDefinition> colors;
+	private ArrayList<IconDefinition> icons;
 
 	public SqlTable(TabDefinition tabDefinition) {
 		this.sql = tabDefinition.getSql();
 		this.colors = tabDefinition.getColors();
+		this.icons = tabDefinition.getIcons();
 		this.setHorizontalScrollEnabled(true);
 		this.setModel(tableModel);
 		this.setEditable(false);
 		this.setColumnControlVisible(true);
+		if (icons != null && icons.size() > 0) {
+			// TODO: Set renderer
+		}
 		this.addHighlighter(HighlighterFactory.createAlternateStriping());
 		this.addHighlighter(new ColorHighlighter(HighlightPredicate.ROLLOVER_ROW, Color.LIGHT_GRAY, null));
 		if (colors != null && colors.size() > 0) {
