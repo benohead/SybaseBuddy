@@ -17,35 +17,48 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
 
+import javax.script.Bindings;
+import javax.script.Compilable;
+import javax.script.CompiledScript;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.ColorHighlighter;
 import org.jdesktop.swingx.decorator.ComponentAdapter;
 import org.jdesktop.swingx.decorator.HighlightPredicate;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
+import org.jdesktop.swingx.renderer.CellContext;
+import org.jdesktop.swingx.renderer.DefaultTableRenderer;
+import org.jdesktop.swingx.renderer.LabelProvider;
 
 /**
  * @author benohead
  * 
  */
+@SuppressWarnings("serial")
 public class SqlTable extends JXTable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 	private String sql;
 	private final SqlTableModel tableModel = new SqlTableModel();
 	private ArrayList<ColorDefinition> colors;
 	private ArrayList<IconDefinition> icons;
+	protected static HashMap<String, Object> valueCache = new HashMap<String, Object>();
+	protected static ScriptEngineManager mgr = new ScriptEngineManager();
+	protected static ScriptEngine jsEngine = mgr.getEngineByName("JavaScript");
+	protected static HashMap<String, CompiledScript> scripts = new HashMap<String, CompiledScript>();
 
 	public SqlTable(TabDefinition tabDefinition) {
 		this.sql = tabDefinition.getSql();
@@ -55,9 +68,6 @@ public class SqlTable extends JXTable {
 		this.setModel(tableModel);
 		this.setEditable(false);
 		this.setColumnControlVisible(true);
-		if (icons != null && icons.size() > 0) {
-			// TODO: Set renderer
-		}
 		this.addHighlighter(HighlighterFactory.createAlternateStriping());
 		this.addHighlighter(new ColorHighlighter(HighlightPredicate.ROLLOVER_ROW, Color.LIGHT_GRAY, null));
 		if (colors != null && colors.size() > 0) {
@@ -75,15 +85,21 @@ public class SqlTable extends JXTable {
 								continue;
 							}
 							String value = adapter.getFilteredStringAt(adapter.row, columnIndex).trim();
-							ScriptEngineManager mgr = new ScriptEngineManager();
-							ScriptEngine jsEngine = mgr.getEngineByName("JavaScript");
-
-							jsEngine.put("value", value);
-							Object highlight = null;
-							try {
-								highlight = jsEngine.eval("new java.lang.Boolean(" + rule + ");");
-							} catch (ScriptException ex) {
-								ex.printStackTrace();
+							Object highlight = valueCache.get(sql + column + rule + value);
+							if (highlight == null) {
+								CompiledScript script = scripts.get(sql + column + rule);
+								try {
+									if (script == null) {
+										script = ((Compilable) jsEngine).compile("new java.lang.Boolean(" + rule + ");");
+										scripts.put(sql + column + rule, script);
+									}
+									Bindings bindings = jsEngine.createBindings();
+									bindings.put("value", value);
+									highlight = script.eval(bindings);
+									valueCache.put(sql + column + rule + value, highlight);
+								} catch (ScriptException ex) {
+									ex.printStackTrace();
+								}
 							}
 							if ((highlight != null) && highlight.equals(Boolean.TRUE)) {
 								return true;
@@ -94,6 +110,44 @@ public class SqlTable extends JXTable {
 				};
 				this.addHighlighter(new ColorHighlighter(predicate, null, color));
 			}
+		}
+		if (icons != null && icons.size() > 0) {
+			LabelProvider provider = new LabelProvider() {
+				@Override
+				protected javax.swing.Icon getValueAsIcon(CellContext context) {
+					javax.swing.Icon iconToRender = null;
+					for (Iterator<IconDefinition> iterator = icons.iterator(); iterator.hasNext();) {
+						IconDefinition iconDefinition = iterator.next();
+						final String column = iconDefinition.getColumn();
+						final String rule = iconDefinition.getRule();
+						ImageIcon icon = iconDefinition.getIcon();
+						int viewColumnIndex = context.getColumn();
+						if (SqlTable.this.getColumnName(viewColumnIndex).equals(column)) {
+							String value = getValueAsString(context).trim();
+							CompiledScript script = scripts.get(sql + column + rule);
+							Object showIcon = valueCache.get(sql + column + rule + value);
+							try {
+								if (script == null) {
+									script = ((Compilable) jsEngine).compile("new java.lang.Boolean(" + rule + ");");
+									scripts.put(sql + column + rule, script);
+								}
+								Bindings bindings = jsEngine.createBindings();
+								bindings.put("value", value);
+								showIcon = script.eval(bindings);
+								valueCache.put(sql + column + rule + value, showIcon);
+							} catch (ScriptException ex) {
+								ex.printStackTrace();
+							}
+							if ((showIcon != null) && showIcon.equals(Boolean.TRUE)) {
+								iconToRender = icon;
+							}
+						}
+					}
+					return iconToRender;
+				}
+			};
+			this.setDefaultRenderer(Object.class, new DefaultTableRenderer(provider));
+			this.setDefaultRenderer(Integer.class, new DefaultTableRenderer(provider));
 		}
 	}
 

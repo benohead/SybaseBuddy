@@ -12,6 +12,7 @@
         </jar>
         <delete dir="${basedir}/dist/sybasebuddy_lib"/>
         <mkdir dir="${basedir}/dist/sybasebuddy_lib"/>
+        <copy file="${basedir}/idle.gif" todir="${basedir}/dist"/>
         <copy file="${basedir}/jconn3.jar" todir="${basedir}/dist/sybasebuddy_lib"/>
         <copy file="${basedir}/images.jar" todir="${basedir}/dist/sybasebuddy_lib"/>
         <copy file="${basedir}/swingx-core-1.6.2.jar" todir="${basedir}/dist/sybasebuddy_lib"/>
